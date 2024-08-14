@@ -33,6 +33,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
         case 1: fix_setrgb(0, 0, 255); break;
         case 2: fix_setrgb(0, 255, 0); break;
+        case 3: fix_setrgb(255, 0, 0); break;
         default: fix_setrgb(0, 0, 0); break;
     }
     return state;

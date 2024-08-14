@@ -1,7 +1,7 @@
 #pragma once
 
 #define TAPPING_TERM 200
-#define QUICK_TAP_TERM 125
+#define QUICK_TAP_TERM 100
 #define PERMISSIVE_HOLD
 
 #define WS2812_PIO_USE_PIO1
