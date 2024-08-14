@@ -1,5 +1,7 @@
 #include QMK_KEYBOARD_H
 
+#include "layer_lock.h"
+
 // KC_SCLN  çÇ
 // KC_SLSH  ;:
 // KC_GRV   '"
@@ -38,6 +40,8 @@
 #define TH_F11 LT(0, KC_F11)
 #define TH_F12 LT(0, KC_F12)
 
+#define LLOCK LT(3, KC_NO)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[0] = LAYOUT_split_3x5_3(
 		TH_Q, TH_W, TH_F, TH_P, TH_B,
@@ -46,8 +50,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			TH_M, RSFT_T(KC_N), LCTL_T(KC_E), LALT_T(KC_I), LGUI_T(KC_O),
 		TH_Z, TH_X, TH_C, TH_D, TH_V,
 			TH_K, TH_H, TH_COMM, TH_DOT, TH_INT1,
-		LT(1, KC_SPC), LT(2, KC_TAB), LT(3, KC_NO),
-			LT(3, KC_NO), KC_ENT, KC_BSPC
+		LT(1, KC_SPC), LT(2, KC_TAB), LLOCK,
+			LLOCK, KC_ENT, KC_BSPC
 	),
 	[1] = LAYOUT_split_3x5_3(
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -91,7 +95,20 @@ static bool process_hold(keyrecord_t* record, uint16_t keycode) {
 	return true;
 }
 
+static bool process_lock(keyrecord_t* record) {
+	if (record->tap.count) {
+		if (record->event.pressed) {
+			layer_lock_invert(get_highest_layer(layer_state));
+		}
+		return false;
+	}
+	return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+	if (!process_layer_lock(keycode, record, KC_NO)) {
+		return false;
+	}
 	switch (keycode) {
 		case TH_Q: return process_hold(record, KC_ESC);
 		case TH_W: return process_hold(record, KC_GRV);
@@ -117,6 +134,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 		case TH_M: return process_hold(record, KC_NO);
 		case TH_F11: return process_hold(record, KC_F11);
 		case TH_F12: return process_hold(record, KC_F12);
+		case LLOCK: return process_lock(record);
 	}
 	return true;
 }
