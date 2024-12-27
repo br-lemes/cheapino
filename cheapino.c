@@ -2,21 +2,12 @@
 #include "quantum.h"
 
 uint32_t flash_led(uint32_t next_trigger_time, void *cb_arg) {
-    static uint8_t _color_index = 3;
-    switch (_color_index++) {
-        case  0: rgblight_setrgb(  0, 255,   0); break;
-        case  1: rgblight_setrgb(  0, 255, 128); break;
-        case  2: rgblight_setrgb(  0, 255, 255); break;
-        case  3: rgblight_setrgb(  0, 128, 255); break;
-        case  4: rgblight_setrgb(  0,   0, 255); break;
-        case  5: rgblight_setrgb(127,   0, 255); break;
-        case  6: rgblight_setrgb(255,   0, 255); break;
-        case  7: rgblight_setrgb(255,   0, 127); break;
-        case  8: rgblight_setrgb(255,   0,   0); break;
-        case  9: rgblight_setrgb(255, 128,   0); break;
-        case 10: rgblight_setrgb(255, 255,   0); break;
-        case 11: rgblight_setrgb(128, 255,   0); break;
-        default: rgblight_setrgb(0, 0, 0); return 0;
+    static uint32_t _hue_countdown = 50;
+    rgblight_sethsv(_hue_countdown * 5, 230, 70);
+    _hue_countdown--;
+    if (_hue_countdown == 0) {
+        rgblight_setrgb(0, 0, 0);
+        return 0;
     }
     return 100;
 }
