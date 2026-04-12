@@ -34,27 +34,25 @@
 #define TH_DOT LT(0, KC_DOT)
 #define TH_INT1 LT(0, KC_INT1)
 
-#define TH_G LT(0, KC_G)
-#define TH_M LT(0, KC_M)
-
 #define TH_F11 LT(0, KC_F11)
 #define TH_F12 LT(0, KC_F12)
 
-#define LLOCK LT(3, KC_NO)
+#define LL_RW LT(3, KC_NO)
+#define LL_MS LT(4, KC_NO)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[0] = LAYOUT_split_3x5_3(
 		TH_Q, TH_W, TH_F, TH_P, TH_B,
 			TH_J, TH_L, TH_U, TH_Y, TH_SCLN,
-		LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T), TH_G,
-			TH_M, RSFT_T(KC_N), LCTL_T(KC_E), LALT_T(KC_I), LGUI_T(KC_O),
+		LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T), LCTL_T(KC_G),
+			LCTL_T(KC_M), RSFT_T(KC_N), LCTL_T(KC_E), LALT_T(KC_I), LGUI_T(KC_O),
 		TH_Z, TH_X, TH_C, TH_D, TH_V,
 			TH_K, TH_H, TH_COMM, TH_DOT, TH_INT1,
-		LT(1, KC_SPC), LT(2, KC_TAB), LLOCK,
-			LLOCK, KC_ENT, KC_BSPC
+		LT(1, KC_SPC), LT(2, KC_TAB), LL_MS,
+			LL_RW, KC_ENT, KC_BSPC
 	),
 	[1] = LAYOUT_split_3x5_3(
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_HOME, MS_WHLU, MS_BTN3, MS_WHLD, KC_END,
 			KC_PGUP, KC_HOME, KC_UP, KC_END, KC_INS,
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 			KC_PGDN, KC_LEFT, KC_DOWN, KC_RIGHT, KC_DEL,
@@ -66,8 +64,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[2] = LAYOUT_split_3x5_3(
 		KC_ESC, KC_GRV, KC_QUOT, KC_LBRC, KC_NUBS,
 			KC_RBRC, KC_BSLS, KC_MINUS, KC_EQUAL, KC_SLSH,
-		LGUI_T(KC_F1), LALT_T(KC_F2), LCTL_T(KC_F3), LSFT_T(KC_F4), KC_F5,
-			KC_F6, RSFT_T(KC_F7), LCTL_T(KC_F8), LALT_T(KC_F9), LGUI_T(KC_F10),
+		LGUI_T(KC_F1), LALT_T(KC_F2), LCTL_T(KC_F3), LSFT_T(KC_F4), LCTL_T(KC_F5),
+			LCTL_T(KC_F6), RSFT_T(KC_F7), LCTL_T(KC_F8), LALT_T(KC_F9), LGUI_T(KC_F10),
 		KC_1, KC_2, KC_3, KC_4, KC_5,
 			KC_6, KC_7, KC_8, KC_9, KC_0,
 		KC_TRNS, KC_TRNS, KC_TRNS,
@@ -82,6 +80,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			KC_K, KC_H, KC_COMM, KC_DOT, KC_INT1,
 		KC_SPC, KC_TAB, KC_TRNS,
 			KC_TRNS, KC_ENT, KC_BSPC
+	),
+	[4] = LAYOUT_split_3x5_3(
+		MS_WHLL, MS_WHLU, MS_UP, MS_WHLU, MS_WHLR,
+			MS_WHLL, MS_WHLU, MS_UP, MS_WHLD, MS_WHLR,
+		LGUI(KC_M), MS_LEFT, MS_DOWN, MS_RGHT, KC_NO,
+			KC_NO, MS_LEFT, MS_DOWN, MS_RGHT, LGUI(KC_M),
+		LGUI_T(MS_BTN4), LALT_T(MS_BTN1), LCTL_T(MS_BTN3), LSFT_T(MS_BTN2), KC_LCTL,
+			KC_LCTL, RSFT_T(MS_BTN1), LCTL_T(MS_BTN3), LALT_T(MS_BTN2), LGUI_T(MS_BTN5),
+		MS_BTN1, MS_BTN2, KC_TRNS,
+			KC_TRNS, MS_BTN2, MS_BTN1
 	)
 };
 
@@ -130,11 +138,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 		case TH_COMM: return process_hold(record, KC_8);
 		case TH_DOT: return process_hold(record, KC_9);
 		case TH_INT1: return process_hold(record, KC_0);
-		case TH_G: return process_hold(record, KC_NO);
-		case TH_M: return process_hold(record, KC_NO);
 		case TH_F11: return process_hold(record, KC_F11);
 		case TH_F12: return process_hold(record, KC_F12);
-		case LLOCK: return process_lock(record);
+		case LL_RW: return process_lock(record);
+		case LL_MS: return process_lock(record);
 	}
 	return true;
 }

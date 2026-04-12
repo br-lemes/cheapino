@@ -1,5 +1,8 @@
 #pragma once
 
+#define MOUSEKEY_TIME_TO_MAX 100
+#define MOUSEKEY_MAX_SPEED 8
+
 #define TAPPING_TERM 200
 #define QUICK_TAP_TERM 100
 #define PERMISSIVE_HOLD
