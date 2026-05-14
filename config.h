@@ -1,8 +1,5 @@
 #pragma once
 
-#define DEBOUNCE 15
-#define DEBOUNCE_TYPE "sym_eager_pk"
-
 #define MOUSEKEY_TIME_TO_MAX 100
 #define MOUSEKEY_MAX_SPEED 8
 
